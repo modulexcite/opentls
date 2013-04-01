@@ -25,7 +25,7 @@ class TestPBKDF2(unittest.TestCase):
         keylen = 20
         out = api.new('unsigned char[]', keylen)
         api.PKCS5_PBKDF2_HMAC_SHA1(password, passlen, salt, saltlen, iterations, keylen, out)
-        self.assertEqual(key, bytes(api.buffer(out)))
+        self.assertEqual(key, api.buffer(out)[:])
 
     def test_0002_iteration(self):
         key = b'\xea\x6c\x01\x4d\xc7\x2d\x6f\x8c\xcd\x1e\xd9\x2a\xce\x1d\x41\xf0\xd8\xde\x89\x57'
@@ -37,7 +37,7 @@ class TestPBKDF2(unittest.TestCase):
         keylen = 20
         out = api.new('unsigned char[]', keylen)
         api.PKCS5_PBKDF2_HMAC_SHA1(password, passlen, salt, saltlen, iterations, keylen, out)
-        self.assertEqual(key, bytes(api.buffer(out)))
+        self.assertEqual(key, api.buffer(out)[:])
 
     def test_4096_iteration(self):
         key = b'\x4b\x00\x79\x01\xb7\x65\x48\x9a\xbe\xad\x49\xd9\x26\xf7\x21\xd0\x65\xa4\x29\xc1'
@@ -49,7 +49,7 @@ class TestPBKDF2(unittest.TestCase):
         keylen = 20
         out = api.new('unsigned char[]', keylen)
         api.PKCS5_PBKDF2_HMAC_SHA1(password, passlen, salt, saltlen, iterations, keylen, out)
-        self.assertEqual(key, bytes(api.buffer(out)))
+        self.assertEqual(key, api.buffer(out)[:])
 
     def test_4096_2_iteration(self):
         key = b'\x3d\x2e\xec\x4f\xe4\x1c\x84\x9b\x80\xc8\xd8\x36\x62\xc0\xe4\x4a\x8b\x29\x1a\x96\x4c\xf2\xf0\x70\x38'
@@ -61,7 +61,7 @@ class TestPBKDF2(unittest.TestCase):
         keylen = 25
         out = api.new('unsigned char[]', keylen)
         api.PKCS5_PBKDF2_HMAC_SHA1(password, passlen, salt, saltlen, iterations, keylen, out)
-        self.assertEqual(key, bytes(api.buffer(out)))
+        self.assertEqual(key, api.buffer(out)[:])
 
     def test_4096_3_iteration(self):
         key = b'\x56\xfa\x6a\xa7\x55\x48\x09\x9d\xcc\x37\xd7\xf0\x34\x25\xe0\xc3'
@@ -73,4 +73,4 @@ class TestPBKDF2(unittest.TestCase):
         keylen = 16
         out = api.new('unsigned char[]', keylen)
         api.PKCS5_PBKDF2_HMAC_SHA1(password, passlen, salt, saltlen, iterations, keylen, out)
-        self.assertEqual(key, bytes(api.buffer(out)))
+        self.assertEqual(key, api.buffer(out)[:])
