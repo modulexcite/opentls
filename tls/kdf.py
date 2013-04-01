@@ -33,5 +33,5 @@ def pbkdf2(password, length, salt=None, iterations=1000):
     c_key = api.new('unsigned char[]', length)
     api.PKCS5_PBKDF2_HMAC_SHA1(c_password, len(password),
         c_salt, len(salt), iterations, length, c_key)
-    secret = Secret(bytes(api.buffer(c_key)), salt, iterations)
+    secret = Secret(api.buffer(c_key)[:], salt, iterations)
     return secret

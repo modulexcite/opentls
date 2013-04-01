@@ -97,7 +97,7 @@ class HMAC(object):
         buff = api.new('unsigned char[]', api.EVP_MAX_MD_SIZE)
         size = api.new('unsigned int*')
         api.HMAC_Final(self._ctx, buff, size)
-        self._digest = bytes(api.buffer(buff, size[0]))
+        self._digest = api.buffer(buff, size[0])[:]
         self._ctx = None
         return self._digest
 

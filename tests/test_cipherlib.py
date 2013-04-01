@@ -11,7 +11,7 @@ except ImportError:
 from tls import cipherlib
 from tls.c import api
 
-from .c import test_evp_cipher as vectors
+from tests.c import test_evp_cipher as vectors
 
 
 if hasattr(str, 'decode'):
