@@ -102,7 +102,7 @@ class Random(_Random):
         "getrandbytes(k) -> 's'. Generate a byte string with k random bytes."
         buff = api.new('unsigned char[]', length)
         self._rand_bytes(buff, length)
-        return bytes(api.buffer(buff))
+        return api.buffer(buff)[:]
 
     def seed(self, state, version=2, entropy=None):
         """Initialize internal state from hashable object.

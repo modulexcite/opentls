@@ -26,7 +26,7 @@ class HMACTests(object):
                 api.cast('void*', key), len(self.key),
                 api.cast('void*', data), len(self.data),
                 api.cast('void*', buff), size)
-        self.assertEqual(self.digest, bytes(api.buffer(buff, size[0])))
+        self.assertEqual(self.digest, api.buffer(buff, size[0])[:])
 
     def test_long(self):
         buff = api.new('unsigned char[]', api.EVP_MAX_MD_SIZE)
@@ -40,7 +40,7 @@ class HMACTests(object):
         api.HMAC_Update(ctx, api.cast('void*', data), len(self.data))
         api.HMAC_Final(ctx, buff, size)
         api.HMAC_CTX_cleanup(ctx)
-        self.assertEqual(self.digest, bytes(api.buffer(buff, size[0])))
+        self.assertEqual(self.digest, api.buffer(buff, size[0])[:])
 
     def test_multiple_updates(self):
         buff = api.new('unsigned char[]', api.EVP_MAX_MD_SIZE)
@@ -55,7 +55,7 @@ class HMACTests(object):
             api.HMAC_Update(ctx, api.cast('void*', data+pos), 1)
         api.HMAC_Final(ctx, buff, size)
         api.HMAC_CTX_cleanup(ctx)
-        self.assertEqual(self.digest, bytes(api.buffer(buff, size[0])))
+        self.assertEqual(self.digest, api.buffer(buff, size[0])[:])
 
 
 # TEST VECTORS

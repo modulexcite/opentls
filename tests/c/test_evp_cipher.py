@@ -56,7 +56,7 @@ class CipherTests(object):
                 + api.EVP_CIPHER_CTX_block_size(self.ctx) - 1)
         outlen = api.new('int*')
         api.EVP_CipherUpdate(self.ctx, output, outlen, plaintext, len(plaintext))
-        self.assertEqual(api.buffer(ciphertext), api.buffer(output, outlen[0]))
+        self.assertEqual(api.buffer(ciphertext)[:], api.buffer(output, outlen[0])[:])
         rval = api.EVP_CipherFinal_ex(self.ctx, output, outlen)
         self.assertEqual(rval, 1)
 
@@ -68,7 +68,7 @@ class CipherTests(object):
                 + api.EVP_CIPHER_CTX_block_size(self.ctx) - 1)
         outlen = api.new('int*')
         api.EVP_CipherUpdate(self.ctx, output, outlen, ciphertext, len(ciphertext))
-        self.assertEqual(api.buffer(plaintext), api.buffer(output, outlen[0]))
+        self.assertEqual(api.buffer(plaintext)[:], api.buffer(output, outlen[0])[:])
         rval = api.EVP_CipherFinal_ex(self.ctx, output, outlen)
         self.assertEqual(rval, 1)
 
@@ -83,8 +83,8 @@ class CipherTests(object):
             plaintext = api.new('unsigned char[]', [num])
             api.EVP_CipherUpdate(self.ctx, outbuf, outlen, plaintext, len(plaintext))
             if outlen[0] > 0:
-                output += bytes(api.buffer(outbuf, outlen[0]))
-        self.assertEqual(bytes(api.buffer(ciphertext)), output)
+                output += api.buffer(outbuf, outlen[0])[:]
+        self.assertEqual(api.buffer(ciphertext)[:], output)
         rval = api.EVP_CipherFinal_ex(self.ctx, outbuf, outlen)
         self.assertEqual(rval, 1)
 
@@ -100,8 +100,8 @@ class CipherTests(object):
             ciphertext = api.new('unsigned char[]', [num])
             api.EVP_CipherUpdate(self.ctx, outbuf, outlen, ciphertext, len(ciphertext))
             if outlen[0] > 0:
-                output += bytes(api.buffer(outbuf, outlen[0]))
-        self.assertEqual(bytes(api.buffer(plaintext)), output)
+                output += api.buffer(outbuf, outlen[0])[:]
+        self.assertEqual(api.buffer(plaintext)[:], output)
         rval = api.EVP_CipherFinal_ex(self.ctx, outbuf, outlen)
         self.assertEqual(rval, 1)
 

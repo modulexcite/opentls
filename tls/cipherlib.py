@@ -259,7 +259,7 @@ class Cipher(object):
         c_data = api.new('unsigned char[]', size)
         read = api.BIO_read(self._sink, c_data, size)
         assert size == read
-        return bytes(api.buffer(c_data, read))
+        return api.buffer(c_data, read)[:]
 
     def plaintext(self):
         """Retrieve the available decrypted plaintext.
@@ -279,14 +279,14 @@ class Cipher(object):
             assert size == read, "Expected to read {0}, got {1}".format(size, read)
         if self.encrypting or self._hmac is None:
             self._hmac = None
-            return bytes(api.buffer(c_data, read))
+            return api.buffer(c_data, read)[:]
         else:
             hmac_len = self.digest_size
             data_len = max(0, size - hmac_len)
-            data = bytes(api.buffer(c_data, data_len))
-            digest = bytes(api.buffer(c_data + data_len, hmac_len))
+            data = api.buffer(c_data, data_len)[:]
+            digest = api.buffer(c_data + data_len, hmac_len)
             self._hmac.update(data)
-            auth = self._hmac.digest()
+            auth = self._hmac.digest()[:]
             valid = 0 if api.BIO_get_cipher_status(self._bio) else 1
             for x, y in zip(auth, digest):
                 if not isinstance(x, numbers.Integral):

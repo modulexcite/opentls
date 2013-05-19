@@ -112,7 +112,7 @@ class BIOChain(object):
             read = api.BIO_gets(self._bio, buf, len(buf))
             if read <= 0 and not api.BIO_should_retry(self._bio):
                 raise IOError('unsupported operation')
-            segments.append(bytes(api.buffer(buf, read)))
+            segments.append(api.buffer(buf, read)[:])
             limit -= read
             if segments[-1][-1:] == b'\n':
                 break
@@ -199,7 +199,7 @@ class BIOChain(object):
                 raise IOError('unsupported operation')
             if read == 0:
                 break
-            segments.append(bytes(api.buffer(data, read)))
+            segments.append(api.buffer(data, read)[:])
         return b"".join(segments)
 
     def readinto(self, b):
