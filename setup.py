@@ -21,7 +21,7 @@ PYTHON3K = sys.version_info[0] > 2
 setup(
     name='opentls',
     version=load_version(),
-    packages=['tls'],
+    packages=['tls', 'tls.c', 'tls.io'],
     zip_safe=False,
     author='Aaron Iles',
     author_email='aaron.iles@gmail.com',
