@@ -164,11 +164,14 @@ class API(object):
     def _verify(self):
         "load openssl, create function attributes"
         includes = "\n".join(self.INCLUDES)
-        self.openssl = self.ffi.verify(includes,
-                extra_compile_args=[
-                    '-Wno-deprecated-declarations',
+        self.openssl = self.ffi.verify(
+            includes,
+            # ext_package must agree with the value in setup.py
+            ext_package="tls",
+            extra_compile_args=[
+                '-Wno-deprecated-declarations',
                 ],
-                libraries=['ssl'])
+            libraries=['ssl'])
 
     def _populate(self):
         """
