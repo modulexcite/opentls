@@ -48,7 +48,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: System :: Networking'
     ],
-    install_requires=['cffi==0.5'],
+    install_requires=['cffi==0.6'],
     tests_require=['mock'] + [] if PYTHON3K else ['unittest2'],
     test_suite="tests" if PYTHON3K else "unittest2.collector"
 )
