@@ -11,15 +11,15 @@ from tls.c import api
 
 class TestSSLMethod(unittest.TestCase):
 
-    @unittest.skip('deprecated in openssl 1.0.0')
+    @unittest.skipIf(api.OPENTLS_NO_SSL2, 'deprecated in openssl 1.0.0')
     def test_ssl_v2(self):
         self.assertTrue(api.SSLv2_method())
 
-    @unittest.skip('deprecated in openssl 1.0.0')
+    @unittest.skipIf(api.OPENTLS_NO_SSL2, 'deprecated in openssl 1.0.0')
     def test_ssl_v2_client(self):
         self.assertTrue(api.SSLv2_client_method())
 
-    @unittest.skip('deprecated in openssl 1.0.0')
+    @unittest.skipIf(api.OPENTLS_NO_SSL2, 'deprecated in openssl 1.0.0')
     def test_ssl_v2_server(self):
         self.assertTrue(api.SSLv2_server_method())
 
