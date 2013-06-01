@@ -130,6 +130,7 @@ class API(object):
         self.TYPES = []
         self.FUNCTIONS = []
         self.C_CUSTOMIZATION = []
+        self.OVERRIDES = []
         self.SETUP = []
         self.TEARDOWN = []
         self._import()
@@ -146,11 +147,12 @@ class API(object):
             self._import_definitions(module, 'TYPES')
             self._import_definitions(module, 'FUNCTIONS')
             self._import_definitions(module, 'C_CUSTOMIZATION')
+            self._import_definitions(module, 'OVERRIDES')
             self._import_definitions(module, 'SETUP')
             self._import_definitions(module, 'TEARDOWN')
 
     def _import_definitions(self, module, name):
-        "import defintions named defintions from module"
+        "import defintions named definitions from module"
         container = getattr(self, name)
         for definition in getattr(module, name, ()):
             if definition not in container:
@@ -173,6 +175,12 @@ class API(object):
                 '-Wno-deprecated-declarations',
                 ],
             libraries=['ssl'])
+        self._overrides = {}
+        for func in self.OVERRIDES:
+            name = func.__name__
+            from_openssl = getattr(self.openssl, name)
+            override = func(self.openssl, from_openssl)
+            self._overrides[name] = override
 
     def _populate(self):
         """
@@ -187,15 +195,13 @@ class API(object):
         self.relate = CdataOwner._relate
         CdataOwner._add_coownership(self)
 
-
     def __getattr__(self, name):
         """
         Try to resolve any attribute that does not exist on self as an
         attribute of the OpenSSL FFI object (in other words, as an OpenSSL
         API).
         """
-        return getattr(self.openssl, name)
-
+        return self._overrides.get(name, getattr(self.openssl, name))
 
     def _initialise(self):
         "initialise openssl, schedule cleanup at exit"

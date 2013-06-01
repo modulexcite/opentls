@@ -1,3 +1,5 @@
+from functools import wraps
+
 INCLUDES = [
     '#include "openssl/ssl.h"',
 ]
@@ -52,3 +54,52 @@ SSL_METHOD* (*SSLv2_server_method)(void) = NULL;
 static const int OPENTLS_NO_SSL2 = 0;
 #endif
 """]
+
+
+def _not_implemented_override(wrapped):
+    """
+    Decorator to help define an override which just raises NotImplementedError,
+    useful to define friendly versions of APIs which are not actually available
+    in the version of OpenSSL currently in use.
+
+    wrapped is the Python function which will override the cffi-defined
+    wrapper.
+
+    This returns a factory to create the override function.  It expects to be
+    called by the tls.c.api setup machinery.  See tls/c/__init__.py.
+    """
+    @wraps(wrapped)
+    def _not_implemented_factory(api, from_openssl):
+        """
+        If SSLv2 is not supported by the OpenSSL library represented by the
+        given api object, create an override function which raises
+        NotImplementedError instead of trying to call the requested API (which
+        would probably result in a null pointer dereference).
+        """
+        if api.OPENTLS_NO_SSL2:
+            # SSLv2 is unsupported, give back the safe wrapper
+            @wraps(wrapped)
+            def not_implemented(*args, **kwargs):
+                raise NotImplementedError()
+            return not_implemented
+        else:
+            # SSLv2 is supported, give back the original function
+            return from_openssl
+
+    return _not_implemented_factory
+
+@_not_implemented_override
+def SSLv2_method():
+    pass
+
+@_not_implemented_override
+def SSLv2_client_method():
+    pass
+
+@_not_implemented_override
+def SSLv2_server_method():
+    pass
+
+OVERRIDES = [
+    SSLv2_method, SSLv2_client_method, SSLv2_server_method,
+    ]
