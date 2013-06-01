@@ -136,6 +136,7 @@ class API(object):
         self._import()
         self._define()
         self._verify()
+        self._override()
         self._populate()
         self._initialise()
 
@@ -175,6 +176,11 @@ class API(object):
                 '-Wno-deprecated-declarations',
                 ],
             libraries=['ssl'])
+
+    def _override(self):
+        """
+        Create any Python-level overrides of the cffi-based wrappers.
+        """
         self._overrides = {}
         for func in self.OVERRIDES:
             name = func.__name__
