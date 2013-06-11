@@ -117,13 +117,6 @@ class API(object):
         'stdio',
     ]
 
-    __instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls.__instance:
-            cls.__instance = super(API, cls).__new__(cls, *args, **kwargs)
-        return cls.__instance
-
     def __init__(self):
         self.ffi = FFI()
         self.INCLUDES = []
@@ -223,7 +216,6 @@ class API(object):
     def version(self, detail=None):
         "Return SSL version string"
         detail = self.SSLEAY_VERSION if detail is None else detail
-        version = self.SSLeay()
         buff = self.SSLeay_version(detail)
         return api.string(buff)
 
