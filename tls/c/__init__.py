@@ -20,7 +20,7 @@ class CdataOwner(object):
     before being returned.
 
     NOTE: CDataOwner objects can not be passed directly to cffi foreign
-    functions. To access the wrapped cdata object, call the '__unwrap__()'
+    functions. To access the wrapped cdata object, call the '_unwrap()'
     function.
     """
 
@@ -34,7 +34,7 @@ class CdataOwner(object):
         to cffi.FFI().new().
 
         Once initialisation is complete, the wrapping can be discarded by
-        calling '__unwrap__' on the wrapper object. This is safe to do because
+        calling '_unwrap' on the wrapper object. This is safe to do because
         coownership is referenced using the cdata object, not the wrapper.
         """
         orig_new = ffi.new
