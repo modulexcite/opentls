@@ -163,8 +163,8 @@ class TestRc4DecryptObject(CipherObject, unittest.TestCase):
     MODE = cipherlib.EVP_CIPH_STREAM_CIPHER
 
     def test_key_len_set(self):
-        self.cipher_key_len = 8
-        # self.assertEqual(8, self.cipher.key_len)
+        self.cipher.key_len = 8
+        self.assertEqual(8, self.cipher.key_len)
 
 
 class TestDesEncryptObject(CipherObject, unittest.TestCase):
