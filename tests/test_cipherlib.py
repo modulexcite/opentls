@@ -211,7 +211,7 @@ class CipherTests(object):
         result = self._encrypt()
         self.assertEqual(result[:len(self.ciphertext)], self.ciphertext)
         result = self._decrypt(result)
-        self.assertEqual(result[:len(self.plaintext)], self.plaintext)
+        self.assertEqual(result, self.plaintext)
 
     def test_bitflip_data_decrypt(self):
         result = self._encrypt()
