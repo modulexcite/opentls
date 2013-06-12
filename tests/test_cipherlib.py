@@ -19,7 +19,6 @@ else:
 
 
 class TestAlgorithms(unittest.TestCase):
-
     def test_guaranteed(self):
         self.assertEqual(set(), cipherlib.algorithms_guaranteed)
 
@@ -194,22 +193,6 @@ class TestDesEncryptObject(CipherObject, unittest.TestCase):
 
 
 class CipherTests(object):
-
-    @staticmethod
-    def hexstr_to_bytestr(hexstr):
-        chars = []
-        for pos in range(0, len(hexstr), 2):
-            chars.append(int(hexstr[pos:pos + 2], 16))
-        return b"".join(int2byte(c) for c in chars)
-
-    @classmethod
-    def setUpClass(self):
-        self.key = self.hexstr_to_bytestr(self.key)
-        if self.iv is not None:
-            self.iv = self.hexstr_to_bytestr(self.iv)
-        self.plaintext = self.hexstr_to_bytestr(self.plaintext)
-        self.ciphertext = self.hexstr_to_bytestr(self.ciphertext)
-
     def _encrypt(self):
         cipher = cipherlib.Cipher(True, self.algorithm)
         cipher.initialise(self.key, self.iv)
@@ -266,432 +249,384 @@ class CipherTests(object):
 
 
 class Test_AES_ECB_128_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-ECB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
     iv = None
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"3ad77bb40d7a3660a89ecaf32466ef97"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b":\xd7{\xb4\rz6`\xa8\x9e\xca\xf3$f\xef\x97"
 
 
 class Test_AES_ECB_128_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-ECB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
     iv = None
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"f5d3d58503b9699de785895a96fdbaaf"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"\xf5\xd3\xd5\x85\x03\xb9i\x9d\xe7\x85\x89Z\x96\xfd\xba\xaf"
 
 
 class Test_AES_ECB_128_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-ECB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
     iv = None
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"43b1cd7f598ece23881b00e3ed030688"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"C\xb1\xcd\x7fY\x8e\xce#\x88\x1b\x00\xe3\xed\x03\x06\x88"
 
 
 class Test_AES_ECB_128_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-ECB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
     iv = None
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"7b0c785e27e8ad3f8223207104725dd4"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"{\x0cx^'\xe8\xad?\x82# q\x04r]\xd4"
 
 
 class Test_AES_ECB_192_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-ECB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
     iv = None
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"bd334f1d6e45f25ff712a214571fa5cc"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b"\xbd3O\x1dnE\xf2_\xf7\x12\xa2\x14W\x1f\xa5\xcc"
 
 
 class Test_AES_ECB_192_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-ECB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
     iv = None
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"974104846d0ad3ad7734ecb3ecee4eef"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"\x97A\x04\x84m\n\xd3\xadw4\xec\xb3\xec\xeeN\xef"
 
 
 class Test_AES_ECB_192_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-ECB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
     iv = None
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"ef7afd2270e2e60adce0ba2face6444e"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"\xefz\xfd\"p\xe2\xe6\n\xdc\xe0\xba/\xac\xe6DN"
 
 
 class Test_AES_ECB_192_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-ECB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
     iv = None
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"9a4b41ba738d6c72fb16691603c18e0e"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"\x9aKA\xbas\x8dlr\xfb\x16i\x16\x03\xc1\x8e\x0e"
 
 
 class Test_AES_ECB_256_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-ECB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
     iv = None
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"f3eed1bdb5d2a03c064b5a7e3db181f8"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b"\xf3\xee\xd1\xbd\xb5\xd2\xa0<\x06KZ~=\xb1\x81\xf8"
 
 
 class Test_AES_ECB_256_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-ECB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
     iv = None
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"591ccb10d410ed26dc5ba74a31362870"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"Y\x1c\xcb\x10\xd4\x10\xed&\xdc[\xa7J16(p"
 
 
 class Test_AES_ECB_256_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-ECB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
     iv = None
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"b6ed21b99ca6f4f9f153e7b1beafed1d"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"\xb6\xed!\xb9\x9c\xa6\xf4\xf9\xf1S\xe7\xb1\xbe\xaf\xed\x1d"
 
 
 class Test_AES_ECB_256_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-ECB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
     iv = None
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"23304b7a39f9f3ff067d8d8f9e24ecc7"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"#0Kz9\xf9\xf3\xff\x06}\x8d\x8f\x9e$\xec\xc7"
 
 
 class Test_AES_CBC_128_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-CBC"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"000102030405060708090A0B0C0D0E0F"
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"7649abac8119b246cee98e9b12e9197d"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b"vI\xab\xac\x81\x19\xb2F\xce\xe9\x8e\x9b\x12\xe9\x19}"
 
 
 class Test_AES_CBC_128_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-CBC"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"7649ABAC8119B246CEE98E9B12E9197D"
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"5086cb9b507219ee95db113a917678b2"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"vI\xab\xac\x81\x19\xb2F\xce\xe9\x8e\x9b\x12\xe9\x19}"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"P\x86\xcb\x9bPr\x19\xee\x95\xdb\x11:\x91vx\xb2"
 
 
 class Test_AES_CBC_128_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-CBC"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"5086CB9B507219EE95DB113A917678B2"
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"73bed6b8e3c1743b7116e69e22229516"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"P\x86\xcb\x9bPr\x19\xee\x95\xdb\x11:\x91vx\xb2"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"s\xbe\xd6\xb8\xe3\xc1t;q\x16\xe6\x9e\"\"\x95\x16"
 
 
 class Test_AES_CBC_128_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-CBC"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"73BED6B8E3C1743B7116E69E22229516"
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"3ff1caa1681fac09120eca307586e1a7"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"s\xbe\xd6\xb8\xe3\xc1t;q\x16\xe6\x9e\"\"\x95\x16"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"?\xf1\xca\xa1h\x1f\xac\t\x12\x0e\xca0u\x86\xe1\xa7"
 
 
 class Test_AES_CBC_192_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-CBC"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"000102030405060708090A0B0C0D0E0F"
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"4f021db243bc633d7178183a9fa071e8"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b"O\x02\x1d\xb2C\xbcc=qx\x18:\x9f\xa0q\xe8"
 
 
 class Test_AES_CBC_192_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-CBC"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"4F021DB243BC633D7178183A9FA071E8"
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"b4d9ada9ad7dedf4e5e738763f69145a"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"O\x02\x1d\xb2C\xbcc=qx\x18:\x9f\xa0q\xe8"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"\xb4\xd9\xad\xa9\xad}\xed\xf4\xe5\xe78v?i\x14Z"
 
 
 class Test_AES_CBC_192_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-CBC"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"B4D9ADA9AD7DEDF4E5E738763F69145A"
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"571b242012fb7ae07fa9baac3df102e0"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"\xb4\xd9\xad\xa9\xad}\xed\xf4\xe5\xe78v?i\x14Z"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"W\x1b$ \x12\xfbz\xe0\x7f\xa9\xba\xac=\xf1\x02\xe0"
 
 
 class Test_AES_CBC_192_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-CBC"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"571B242012FB7AE07FA9BAAC3DF102E0"
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"08b0e27988598881d920a9e64f5615cd"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"W\x1b$ \x12\xfbz\xe0\x7f\xa9\xba\xac=\xf1\x02\xe0"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"\x08\xb0\xe2y\x88Y\x88\x81\xd9 \xa9\xe6OV\x15\xcd"
 
 
 class Test_AES_CBC_256_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-CBC"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"000102030405060708090A0B0C0D0E0F"
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"f58c4c04d6e5f1ba779eabfb5f7bfbd6"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b"\xf5\x8cL\x04\xd6\xe5\xf1\xbaw\x9e\xab\xfb_{\xfb\xd6"
 
 
 class Test_AES_CBC_256_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-CBC"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"F58C4C04D6E5F1BA779EABFB5F7BFBD6"
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"9cfc4e967edb808d679f777bc6702c7d"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"\xf5\x8cL\x04\xd6\xe5\xf1\xbaw\x9e\xab\xfb_{\xfb\xd6"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"\x9c\xfcN\x96~\xdb\x80\x8dg\x9fw{\xc6p,}"
 
 
 class Test_AES_CBC_256_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-CBC"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"9CFC4E967EDB808D679F777BC6702C7D"
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"39f23369a9d9bacfa530e26304231461"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"\x9c\xfcN\x96~\xdb\x80\x8dg\x9fw{\xc6p,}"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"9\xf23i\xa9\xd9\xba\xcf\xa50\xe2c\x04#\x14a"
 
 
 class Test_AES_CBC_256_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-CBC"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"39F23369A9D9BACFA530E26304231461"
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"b2eb05e2c39be9fcda6c19078c6a9d1b"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"9\xf23i\xa9\xd9\xba\xcf\xa50\xe2c\x04#\x14a"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"\xb2\xeb\x05\xe2\xc3\x9b\xe9\xfc\xdal\x19\x07\x8cj\x9d\x1b"
 
 
 class Test_AES_CFB_128_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-CFB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"000102030405060708090a0b0c0d0e0f"
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"3b3fd92eb72dad20333449f8e83cfb4a"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b";?\xd9.\xb7-\xad 34I\xf8\xe8<\xfbJ"
 
 
 class Test_AES_CFB_128_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-CFB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"3B3FD92EB72DAD20333449F8E83CFB4A"
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"c8a64537a0b3a93fcde3cdad9f1ce58b"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b";?\xd9.\xb7-\xad 34I\xf8\xe8<\xfbJ"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"\xc8\xa6E7\xa0\xb3\xa9?\xcd\xe3\xcd\xad\x9f\x1c\xe5\x8b"
 
 
 class Test_AES_CFB_128_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-CFB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"C8A64537A0B3A93FCDE3CDAD9F1CE58B"
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"26751f67a3cbb140b1808cf187a4f4df"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"\xc8\xa6E7\xa0\xb3\xa9?\xcd\xe3\xcd\xad\x9f\x1c\xe5\x8b"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"&u\x1fg\xa3\xcb\xb1@\xb1\x80\x8c\xf1\x87\xa4\xf4\xdf"
 
 
 class Test_AES_CFB_128_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-CFB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"26751F67A3CBB140B1808CF187A4F4DF"
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"c04b05357c5d1c0eeac4c66f9ff7f2e6"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"&u\x1fg\xa3\xcb\xb1@\xb1\x80\x8c\xf1\x87\xa4\xf4\xdf"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"\xc0K\x055|]\x1c\x0e\xea\xc4\xc6o\x9f\xf7\xf2\xe6"
 
 
 class Test_AES_CFB_192_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-CFB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"000102030405060708090A0B0C0D0E0F"
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"cdc80d6fddf18cab34c25909c99a4174"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b"\xcd\xc8\ro\xdd\xf1\x8c\xab4\xc2Y\t\xc9\x9aAt"
 
 
 class Test_AES_CFB_192_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-CFB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"CDC80D6FDDF18CAB34C25909C99A4174"
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"67ce7f7f81173621961a2b70171d3d7a"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"\xcd\xc8\ro\xdd\xf1\x8c\xab4\xc2Y\t\xc9\x9aAt"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"g\xce\x7f\x7f\x81\x176!\x96\x1a+p\x17\x1d=z"
 
 
 class Test_AES_CFB_192_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-CFB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"67CE7F7F81173621961A2B70171D3D7A"
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"2e1e8a1dd59b88b1c8e60fed1efac4c9"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"g\xce\x7f\x7f\x81\x176!\x96\x1a+p\x17\x1d=z"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b".\x1e\x8a\x1d\xd5\x9b\x88\xb1\xc8\xe6\x0f\xed\x1e\xfa\xc4\xc9"
 
 
 class Test_AES_CFB_192_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-CFB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"2E1E8A1DD59B88B1C8E60FED1EFAC4C9"
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"c05f9f9ca9834fa042ae8fba584b09ff"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b".\x1e\x8a\x1d\xd5\x9b\x88\xb1\xc8\xe6\x0f\xed\x1e\xfa\xc4\xc9"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"\xc0_\x9f\x9c\xa9\x83O\xa0B\xae\x8f\xbaXK\t\xff"
 
 
 class Test_AES_CFB_256_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-CFB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"000102030405060708090A0B0C0D0E0F"
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"DC7E84BFDA79164B7ECD8486985D3860"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b"\xdc~\x84\xbf\xday\x16K~\xcd\x84\x86\x98]8`"
 
 
 class Test_AES_CFB_256_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-CFB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"DC7E84BFDA79164B7ECD8486985D3860"
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"39ffed143b28b1c832113c6331e5407b"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"\xdc~\x84\xbf\xday\x16K~\xcd\x84\x86\x98]8`"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"9\xff\xed\x14;(\xb1\xc82\x11<c1\xe5@{"
 
 
 class Test_AES_CFB_256_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-CFB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"39FFED143B28B1C832113C6331E5407B"
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"df10132415e54b92a13ed0a8267ae2f9"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"9\xff\xed\x14;(\xb1\xc82\x11<c1\xe5@{"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"\xdf\x10\x13$\x15\xe5K\x92\xa1>\xd0\xa8&z\xe2\xf9"
 
 
 class Test_AES_CFB_256_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-CFB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"DF10132415E54B92A13ED0A8267AE2F9"
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"75a385741ab9cef82031623d55b1e471"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"\xdf\x10\x13$\x15\xe5K\x92\xa1>\xd0\xa8&z\xe2\xf9"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"u\xa3\x85t\x1a\xb9\xce\xf8 1b=U\xb1\xe4q"
 
 
 class Test_AES_OFB_128_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-OFB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"000102030405060708090A0B0C0D0E0F"
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"3b3fd92eb72dad20333449f8e83cfb4a"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b";?\xd9.\xb7-\xad 34I\xf8\xe8<\xfbJ"
 
 
 class Test_AES_OFB_128_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-OFB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"50FE67CC996D32B6DA0937E99BAFEC60"
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"7789508d16918f03f53c52dac54ed825"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"P\xfeg\xcc\x99m2\xb6\xda\t7\xe9\x9b\xaf\xec`"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"w\x89P\x8d\x16\x91\x8f\x03\xf5<R\xda\xc5N\xd8%"
 
 
 class Test_AES_OFB_128_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-OFB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"D9A4DADA0892239F6B8B3D7680E15674"
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"9740051e9c5fecf64344f7a82260edcc"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"\xd9\xa4\xda\xda\x08\x92#\x9fk\x8b=v\x80\xe1Vt"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"\x97@\x05\x1e\x9c_\xec\xf6CD\xf7\xa8\"`\xed\xcc"
 
 
 class Test_AES_OFB_128_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-128-OFB"
-    key = b"2b7e151628aed2a6abf7158809cf4f3c"
-    iv = b"A78819583F0308E7A6BF36B1386ABF23"
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"304c6528f659c77866a510d9c1d6ae5e"
+    key = b"+~\x15\x16(\xae\xd2\xa6\xab\xf7\x15\x88\t\xcfO<"
+    iv = b"\xa7\x88\x19X?\x03\x08\xe7\xa6\xbf6\xb18j\xbf#"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"0Le(\xf6Y\xc7xf\xa5\x10\xd9\xc1\xd6\xae^"
 
 
 class Test_AES_OFB_192_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-OFB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"000102030405060708090A0B0C0D0E0F"
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"cdc80d6fddf18cab34c25909c99a4174"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b"\xcd\xc8\ro\xdd\xf1\x8c\xab4\xc2Y\t\xc9\x9aAt"
 
 
 class Test_AES_OFB_192_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-OFB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"A609B38DF3B1133DDDFF2718BA09565E"
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"fcc28b8d4c63837c09e81700c1100401"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"\xa6\t\xb3\x8d\xf3\xb1\x13=\xdd\xff'\x18\xba\tV^"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"\xfc\xc2\x8b\x8dLc\x83|\t\xe8\x17\x00\xc1\x10\x04\x01"
 
 
 class Test_AES_OFB_192_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-OFB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"52EF01DA52602FE0975F78AC84BF8A50"
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"8d9a9aeac0f6596f559c6d4daf59a5f2"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"R\xef\x01\xdaR`/\xe0\x97_x\xac\x84\xbf\x8aP"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"\x8d\x9a\x9a\xea\xc0\xf6YoU\x9cmM\xafY\xa5\xf2"
 
 
 class Test_AES_OFB_192_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-192-OFB"
-    key = b"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
-    iv = b"BD5286AC63AABD7EB067AC54B553F71D"
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"6d9f200857ca6c3e9cac524bd9acc92a"
+    key = b"\x8es\xb0\xf7\xda\x0edR\xc8\x10\xf3+\x80\x90y\xe5b\xf8\xea\xd2R,k{"
+    iv = b"\xbdR\x86\xacc\xaa\xbd~\xb0g\xacT\xb5S\xf7\x1d"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"m\x9f \x08W\xcal>\x9c\xacRK\xd9\xac\xc9*"
 
 
 class Test_AES_OFB_256_v1(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-OFB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"000102030405060708090A0B0C0D0E0F"
-    plaintext = b"6bc1bee22e409f96e93d7e117393172a"
-    ciphertext = b"dc7e84bfda79164b7ecd8486985d3860"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f"
+    plaintext = b"k\xc1\xbe\xe2.@\x9f\x96\xe9=~\x11s\x93\x17*"
+    ciphertext = b"\xdc~\x84\xbf\xday\x16K~\xcd\x84\x86\x98]8`"
 
 
 class Test_AES_OFB_256_v2(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-OFB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"B7BF3A5DF43989DD97F0FA97EBCE2F4A"
-    plaintext = b"ae2d8a571e03ac9c9eb76fac45af8e51"
-    ciphertext = b"4febdc6740d20b3ac88f6ad82a4fb08d"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"\xb7\xbf:]\xf49\x89\xdd\x97\xf0\xfa\x97\xeb\xce/J"
+    plaintext = b"\xae-\x8aW\x1e\x03\xac\x9c\x9e\xb7o\xacE\xaf\x8eQ"
+    ciphertext = b"O\xeb\xdcg@\xd2\x0b:\xc8\x8fj\xd8*O\xb0\x8d"
 
 
 class Test_AES_OFB_256_v3(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-OFB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"E1C656305ED1A7A6563805746FE03EDC"
-    plaintext = b"30c81c46a35ce411e5fbc1191a0a52ef"
-    ciphertext = b"71ab47a086e86eedf39d1c5bba97c408"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"\xe1\xc6V0^\xd1\xa7\xa6V8\x05to\xe0>\xdc"
+    plaintext = b"0\xc8\x1cF\xa3\\\xe4\x11\xe5\xfb\xc1\x19\x1a\nR\xef"
+    ciphertext = b"q\xabG\xa0\x86\xe8n\xed\xf3\x9d\x1c[\xba\x97\xc4\x08"
 
 
 class Test_AES_OFB_256_v4(CipherTests, unittest.TestCase):
-
     algorithm = b"AES-256-OFB"
-    key = b"603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
-    iv = b"41635BE625B48AFC1666DD42A09D96E7"
-    plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
-    ciphertext = b"0126141d67f37be8538f5a8be740e484"
+    key = b"`=\xeb\x10\x15\xcaq\xbe+s\xae\xf0\x85}w\x81\x1f5,\x07;a\x08\xd7-\x98\x10\xa3\t\x14\xdf\xf4"
+    iv = b"Ac[\xe6%\xb4\x8a\xfc\x16f\xddB\xa0\x9d\x96\xe7"
+    plaintext = b"\xf6\x9f$E\xdfO\x9b\x17\xad+A{\xe6l7\x10"
+    ciphertext = b"\x01&\x14\x1dg\xf3{\xe8S\x8fZ\x8b\xe7@\xe4\x84"
