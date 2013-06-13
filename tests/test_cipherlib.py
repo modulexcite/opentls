@@ -31,7 +31,6 @@ class TestAlgorithms(unittest.TestCase):
 
 
 class CipherObject(object):
-
     def setUp(self):
         self.cipher = cipherlib.Cipher(self.ENCRYPT, self.ALGORITHM, self.DIGEST)
 
@@ -41,7 +40,7 @@ class CipherObject(object):
 
     def test_algorithm(self):
         self.assertEqual(self.ALGORITHM, self.cipher.algorithm)
-    
+
     def test_digest(self):
         self.assertEqual(self.DIGEST, self.cipher.digest)
 
