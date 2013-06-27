@@ -30,6 +30,22 @@ class TestAlgorithms(unittest.TestCase):
         self.assertIn(b'AES-128-CBC', cipherlib.algorithms_available)
 
 
+class TestCipherLib(unittest.TestCase):
+    def test_nopad(self):
+        cipher = cipherlib.Cipher(digest=None, nopad=True)
+        cipher.initialise("abcdefghijklmnop", "\x00" * 16)
+        cipher.update("abc... easy as 123... something something       ")
+        cipher.finish()
+        ciphertext = cipher.ciphertext()
+        self.assertEqual(ciphertext, "\n\xb5\xbc\xcf\x12\xcc\x98z\xe9\x9d\xea\xe7X\xde\xfa\x9e\xa3v\xd5\xca\x01j7\xebIN\xe3\x97\xbc\x02~xs^\x8b\x7fP\x9cR\x92\xcf\x007qA\x80\xacq")
+        cipher = cipherlib.Cipher(digest=None, nopad=True, encrypt=False)
+        cipher.initialise("abcdefghijklmnop", "\x00" * 16)
+        cipher.update(ciphertext)
+        cipher.finish()
+        plaintext = cipher.plaintext()
+        self.assertEqual(plaintext, "abc... easy as 123... something something       ")
+
+
 class CipherObject(object):
     def setUp(self):
         self.cipher = cipherlib.Cipher(self.ENCRYPT, self.ALGORITHM, self.DIGEST)

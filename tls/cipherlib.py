@@ -78,9 +78,10 @@ class Cipher(object):
     name as the digest paramter. To disable the HMAC, pass None instead.
     """
 
-    def __init__(self, encrypt=True, algorithm=b'AES-128-CBC', digest=b'SHA1'):
+    def __init__(self, encrypt=True, algorithm=b'AES-128-CBC', digest=b'SHA1', nopad=False):
         self._algorithm = algorithm
         self._digest = digest
+        self._nopad = nopad
         # initialise attributes to empty
         self._encrypting = bool(encrypt)
         self._initialised = False
@@ -203,6 +204,8 @@ class Cipher(object):
         if not api.EVP_CipherInit_ex(self._ctx,
                 api.NULL, api.NULL, c_key, c_iv, -1):
             raise ValueError("Unable to initialise cipher")
+        if self._nopad:
+            api.EVP_CIPHER_CTX_set_padding(self._ctx, 0)
         if self.digest is not None:
             self._hmac = hmac.HMAC(key, digestmod=self.digest)
         self._initialised = True
