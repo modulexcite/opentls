@@ -147,5 +147,5 @@ has been created for use.
 But as yet there are no documentation
 has been written.
 
-.. |build_status| image:: https://secure.travis-ci.org/aliles/opentls.png?branch=master
-   :target: http://travis-ci.org/#!/aliles/opentls
+.. |build_status| image:: https://secure.travis-ci.org/alex/opentls.png?branch=master
+   :target: http://travis-ci.org/alex/opentls
