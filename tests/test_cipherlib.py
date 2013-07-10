@@ -32,7 +32,7 @@ class TestCipherLib(unittest.TestCase):
     def test_nopad(self):
         cipher = cipherlib.Cipher(digest=None, nopad=True)
         cipher.initialise(b"abcdefghijklmnop", b"\x00" * 16)
-        cipher.update("abc... easy as 123... something something       ")
+        cipher.update(b"abc... easy as 123... something something       ")
         cipher.finish()
         ciphertext = cipher.ciphertext()
         self.assertEqual(ciphertext, b"\n\xb5\xbc\xcf\x12\xcc\x98z\xe9\x9d\xea\xe7X\xde\xfa\x9e\xa3v\xd5\xca\x01j7\xebIN\xe3\x97\xbc\x02~xs^\x8b\x7fP\x9cR\x92\xcf\x007qA\x80\xacq")
@@ -41,7 +41,7 @@ class TestCipherLib(unittest.TestCase):
         cipher.update(ciphertext)
         cipher.finish()
         plaintext = cipher.plaintext()
-        self.assertEqual(plaintext, "abc... easy as 123... something something       ")
+        self.assertEqual(plaintext, b"abc... easy as 123... something something       ")
 
 
 class CipherObject(object):
