@@ -6,6 +6,7 @@ import sys
 
 import tls.c
 
+
 def load_version(filename='tls/version.py'):
     "Parse a __version__ number from a source file"
     with open(filename) as source:

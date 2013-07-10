@@ -3,8 +3,8 @@
 Implements the HMAC algorithm as described by RFC 2104.
 """
 from __future__ import absolute_import, division, print_function
+
 import numbers
-import weakref
 
 from tls.c import api
 
@@ -44,9 +44,7 @@ class HMAC(object):
         self._key = api.new('char[]', key)
         api.HMAC_Init_ex(ctx, api.cast('void*', self._key),
                 len(key), self._md, api.NULL)
-        cleanup = lambda _: api.HMAC_CTX_cleanup(ctx)
-        self._weakref = weakref.ref(self, cleanup)
-        self._ctx = ctx
+        self._ctx = api.gc(ctx, api.HMAC_CTX_cleanup)
         if msg is not None:
             self.update(msg)
 

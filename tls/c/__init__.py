@@ -35,23 +35,19 @@ class API(object):
         'stdio',
     ]
 
-    __instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls.__instance:
-            cls.__instance = super(API, cls).__new__(cls, *args, **kwargs)
-        return cls.__instance
-
     def __init__(self):
         self.ffi = FFI()
         self.INCLUDES = []
         self.TYPES = []
         self.FUNCTIONS = []
+        self.C_CUSTOMIZATION = []
+        self.OVERRIDES = []
         self.SETUP = []
         self.TEARDOWN = []
         self._import()
         self._define()
         self._verify()
+        self._override()
         self._populate()
         self._initialise()
 
@@ -62,11 +58,13 @@ class API(object):
             self._import_definitions(module, 'INCLUDES')
             self._import_definitions(module, 'TYPES')
             self._import_definitions(module, 'FUNCTIONS')
+            self._import_definitions(module, 'C_CUSTOMIZATION')
+            self._import_definitions(module, 'OVERRIDES')
             self._import_definitions(module, 'SETUP')
             self._import_definitions(module, 'TEARDOWN')
 
     def _import_definitions(self, module, name):
-        "import defintions named defintions from module"
+        "import defintions named definitions from module"
         container = getattr(self, name)
         for definition in getattr(module, name, ()):
             if definition not in container:
@@ -81,9 +79,8 @@ class API(object):
 
     def _verify(self):
         "load openssl, create function attributes"
-        includes = "\n".join(self.INCLUDES)
         self.openssl = self.ffi.verify(
-            includes,
+            source="\n".join(self.INCLUDES + self.C_CUSTOMIZATION),
             # ext_package must agree with the value in setup.py
             ext_package="tls",
             extra_compile_args=[
@@ -91,6 +88,17 @@ class API(object):
             ],
             libraries=['ssl']
         )
+
+    def _override(self):
+        """
+        Create any Python-level overrides of the cffi-based wrappers.
+        """
+        self._overrides = {}
+        for func in self.OVERRIDES:
+            name = func.__name__
+            from_openssl = getattr(self.openssl, name)
+            override = func(self.openssl, from_openssl)
+            self._overrides[name] = override
 
     def _populate(self):
         """
@@ -101,6 +109,7 @@ class API(object):
         self.callback = self.ffi.callback
         self.cast = self.ffi.cast
         self.new = self.ffi.new
+        self.gc = self.ffi.gc
         self.string = self.ffi.string
 
     def __getattr__(self, name):
@@ -109,7 +118,7 @@ class API(object):
         attribute of the OpenSSL FFI object (in other words, as an OpenSSL
         API).
         """
-        return getattr(self.openssl, name)
+        return self._overrides.get(name, getattr(self.openssl, name))
 
     def _initialise(self):
         "initialise openssl, schedule cleanup at exit"
@@ -138,7 +147,6 @@ class API(object):
     def version(self, detail=None):
         "Return SSL version string"
         detail = self.SSLEAY_VERSION if detail is None else detail
-        version = self.SSLeay()
         buff = self.SSLeay_version(detail)
         return api.string(buff)
 

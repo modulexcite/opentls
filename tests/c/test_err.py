@@ -54,7 +54,7 @@ class TestErrorParse(unittest.TestCase):
 
     def test_error_string_n(self):
         stop = len(self.text) - 1
-        buf = api.new('char[]', 2*len(self.text))
+        buf = api.new('char[]', 2 * len(self.text))
         api.ERR_error_string_n(self.code, buf, stop)
         self.assertEqual(api.string(buf), self.text[:stop - 1])
 

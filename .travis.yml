@@ -3,12 +3,12 @@ python:
   - 2.6
   - 2.7
   - 3.2
+  - 3.3
 install:
-  - pip install -r requirements/testing.txt -r requirements/production.txt --use-mirrors
+  - pip install -r requirements/testing.txt -r requirements/production.txt
   - python setup.py install
 script:
   - python -m tls.version
   - coverage run setup.py test
   - coverage report --include="tls*"
-notifications:
-    email: aaron.iles+travis-ci@gmail.com
+  - "flake8 tls/ tests/ --ignore='E122,E124,E125,E126,E128,E501,F403,F999'"

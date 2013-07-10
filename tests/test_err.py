@@ -95,6 +95,7 @@ class TestErrorFetch(unittest.TestCase):
     @mock.patch('tls.err.logger')
     def test_no_errors(self, logger):
         self.count_errors_on_stack()
+
         @err.log_errors
         def func():
             pass

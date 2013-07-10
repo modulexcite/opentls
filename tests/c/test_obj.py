@@ -51,6 +51,7 @@ class TestDoAll(unittest.TestCase):
 
     def test_do_all(self):
         names = set()
+
         def add_name(obj, _):
             names.add(obj.name)
         callback = api.callback('void(*)(const OBJ_NAME*, void *arg)', add_name)
@@ -59,6 +60,7 @@ class TestDoAll(unittest.TestCase):
 
     def test_do_all_sorted(self):
         names = set()
+
         def add_name(obj, _):
             names.add(obj.name)
         callback = api.callback('void(*)(const OBJ_NAME*, void *arg)', add_name)

@@ -19,7 +19,7 @@ class CipherTests(object):
     def hexstr_to_numbers(hexstr):
         numbers = []
         for pos in range(0, len(hexstr), 2):
-            numbers.append(int(hexstr[pos:pos+2], 16))
+            numbers.append(int(hexstr[pos:pos + 2], 16))
         return numbers
 
     @staticmethod
