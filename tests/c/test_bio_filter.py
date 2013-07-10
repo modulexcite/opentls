@@ -1,6 +1,5 @@
 """Test BIO Filters"""
 from __future__ import absolute_import, division, print_function
-from itertools import islice
 
 try:
     import unittest2 as unittest
@@ -114,7 +113,7 @@ class CipherFilter(object):
     def hexstr_to_numbers(hexstr):
         numbers = []
         for pos in range(0, len(hexstr), 2):
-            numbers.append(int(hexstr[pos:pos+2], 16))
+            numbers.append(int(hexstr[pos:pos + 2], 16))
         return numbers
 
     def setUp(self):
@@ -227,6 +226,7 @@ class Test_AES_ECB_192_v4(CipherFilter, unittest.TestCase):
     plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
     ciphertext = b"9a4b41ba738d6c72fb16691603c18e0e"
 
+
 class Test_AES_ECB_256_v1(CipherFilter, unittest.TestCase):
 
     algorithm = b"AES-256-ECB"
@@ -261,6 +261,7 @@ class Test_AES_ECB_256_v4(CipherFilter, unittest.TestCase):
     iv = None
     plaintext = b"f69f2445df4f9b17ad2b417be66c3710"
     ciphertext = b"23304b7a39f9f3ff067d8d8f9e24ecc7"
+
 
 class Test_AES_CBC_128_v1(CipherFilter, unittest.TestCase):
 

@@ -7,7 +7,6 @@ in 'Beautiful Testing' titled 'How to test a random number generator'.
 http://www.johndcook.com/blog/2010/12/06/how-to-test-a-random-number-generator-2/
 """
 from __future__ import absolute_import, division, print_function
-import ctypes
 import math
 import random
 
@@ -101,7 +100,7 @@ class RandTests(object):
                 break
             for x in range(value + 1):
                 counts[x] = 1 + counts.get(x, 0)
-        empirical = [counts.get(i,0) / samples for i in range(256)]
+        empirical = [counts.get(i, 0) / samples for i in range(256)]
         theoretical = [1.0 - (x / 255.0) for x in range(256)]
         kplus = math.sqrt(samples) * max(empirical[i] - theoretical[i] for i in range(256))
         self.assertGreaterEqual(kplus, 0.07089)

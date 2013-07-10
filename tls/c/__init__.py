@@ -167,8 +167,9 @@ class API(object):
             ext_package="tls",
             extra_compile_args=[
                 '-Wno-deprecated-declarations',
-                ],
-            libraries=['ssl'])
+            ],
+            libraries=['ssl']
+        )
 
     def _override(self):
         """

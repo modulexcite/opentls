@@ -88,13 +88,16 @@ def _not_implemented_override(wrapped):
 
     return _not_implemented_factory
 
+
 @_not_implemented_override
 def SSLv2_method():
     pass
 
+
 @_not_implemented_override
 def SSLv2_client_method():
     pass
+
 
 @_not_implemented_override
 def SSLv2_server_method():
@@ -102,4 +105,4 @@ def SSLv2_server_method():
 
 OVERRIDES = [
     SSLv2_method, SSLv2_client_method, SSLv2_server_method,
-    ]
+]

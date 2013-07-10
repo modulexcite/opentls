@@ -1,6 +1,6 @@
 """Test Python hashlib API implementation using OpenSSL"""
 from __future__ import absolute_import, division, print_function
-from functools import partial
+
 import mock
 
 try:
