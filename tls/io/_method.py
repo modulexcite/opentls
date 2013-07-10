@@ -25,28 +25,27 @@ class BIOMethod(BIOBase):
         wrapper = cls(fileobj)
         bio = api.new('BIO*')
         api.BIO_set(bio, wrapper.method)
-        api.relate(bio, wrapper, 'method')
         return bio
 
     def __init__(self, fileobj):
-        method = api.new('BIO_METHOD*', coown=True)
+        method = api.new('BIO_METHOD*')
         method.type = api.BIO_TYPE_SOURCE_SINK | 0xFF
-        method.name = api.new('char[]', repr(fileobj).encode())
-        method.bwrite = api.callback('int (*)(BIO*, const char*, int)',
+        method.name = self._name = api.new('char[]', repr(fileobj).encode())
+        method.bwrite = self._bwrite = api.callback('int (*)(BIO*, const char*, int)',
                 self.write)
-        method.bread = api.callback('int (*)(BIO*, char*, int)',
+        method.bread = self._bread = api.callback('int (*)(BIO*, char*, int)',
                 self.read)
-        method.bputs = api.callback('int (*)(BIO*, const char*)',
+        method.bputs = self._bputs = api.callback('int (*)(BIO*, const char*)',
                 self.puts)
-        method.bgets = api.callback('int (*)(BIO*, char*, int)',
+        method.bgets = self._bgets = api.callback('int (*)(BIO*, char*, int)',
                 self.gets)
-        method.ctrl = api.callback('long (*)(BIO*, int, long, void*)',
+        method.ctrl = self._ctrl = api.callback('long (*)(BIO*, int, long, void*)',
                 self.ctrl)
-        method.create = api.callback('int (*)(BIO*)',
+        method.create = self._create = api.callback('int (*)(BIO*)',
                 self.create)
         method.destroy = api.NULL
         method.callback_ctrl = api.NULL
-        self.method = method._unwrap()
+        self.method = method
         self.fileobj = fileobj
 
     def create(self, bio):

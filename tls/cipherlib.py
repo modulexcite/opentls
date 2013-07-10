@@ -35,7 +35,6 @@ The HMAC can be disabled by passing None.
 """
 from __future__ import absolute_import, division, print_function
 import numbers
-import weakref
 
 from tls import err, hmac
 from tls.c import api
@@ -90,7 +89,6 @@ class Cipher(object):
         self._ctx = api.NULL
         self._sink = api.NULL
         self._hmac = None
-        self._weakrefs = []
         # create cipher object from cipher name
         cipher = api.EVP_get_cipherbyname(algorithm)
         if cipher == api.NULL:
@@ -103,9 +101,7 @@ class Cipher(object):
         self._sink = api.BIO_new(api.BIO_s_mem())
         bio = api.BIO_push(api.BIO_new(api.BIO_f_buffer()), self._sink)
         bio = api.BIO_push(api.BIO_new(api.BIO_f_cipher()), bio)
-        cleanup = lambda _: api.BIO_free_all(bio)
-        self._weakrefs.append(weakref.ref(self, cleanup))
-        self._bio = bio
+        self._bio = api.gc(bio, lambda bio: api.BIO_free_all(bio))
         # initialise cipher context
         api.BIO_get_cipher_ctx(bio, self._ctxptr)
         self._ctx = self._ctxptr[0]
