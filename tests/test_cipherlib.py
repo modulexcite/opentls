@@ -37,7 +37,7 @@ class TestCipherLib(unittest.TestCase):
         ciphertext = cipher.ciphertext()
         self.assertEqual(ciphertext, b"\n\xb5\xbc\xcf\x12\xcc\x98z\xe9\x9d\xea\xe7X\xde\xfa\x9e\xa3v\xd5\xca\x01j7\xebIN\xe3\x97\xbc\x02~xs^\x8b\x7fP\x9cR\x92\xcf\x007qA\x80\xacq")
         cipher = cipherlib.Cipher(digest=None, nopad=True, encrypt=False)
-        cipher.initialise("abcdefghijklmnop", "b\x00" * 16)
+        cipher.initialise("abcdefghijklmnop", b"\x00" * 16)
         cipher.update(ciphertext)
         cipher.finish()
         plaintext = cipher.plaintext()
