@@ -20,7 +20,7 @@ class CdataOwner(object):
     before being returned.
 
     NOTE: CDataOwner objects can not be passed directly to cffi foreign
-    functions. To access the wrapped cdata object, call the '__unwrap__()'
+    functions. To access the wrapped cdata object, call the '_unwrap()'
     function.
     """
 
@@ -34,7 +34,7 @@ class CdataOwner(object):
         to cffi.FFI().new().
 
         Once initialisation is complete, the wrapping can be discarded by
-        calling '__unwrap__' on the wrapper object. This is safe to do because
+        calling '_unwrap' on the wrapper object. This is safe to do because
         coownership is referenced using the cdata object, not the wrapper.
         """
         orig_new = ffi.new
@@ -116,13 +116,6 @@ class API(object):
         'ssleay',
         'stdio',
     ]
-
-    __instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls.__instance:
-            cls.__instance = super(API, cls).__new__(cls, *args, **kwargs)
-        return cls.__instance
 
     def __init__(self):
         self.ffi = FFI()
@@ -236,7 +229,6 @@ class API(object):
     def version(self, detail=None):
         "Return SSL version string"
         detail = self.SSLEAY_VERSION if detail is None else detail
-        version = self.SSLeay()
         buff = self.SSLeay_version(detail)
         return api.string(buff)
 
