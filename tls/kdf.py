@@ -18,7 +18,8 @@ from collections import namedtuple
 from tls import random
 from tls.c import api
 
-__all__ = ['Secret', 'derive_key', 'pbkdf2']
+
+__all__ = ['Secret', 'pbkdf2']
 
 
 Secret = namedtuple('Secret', 'key salt iterations')

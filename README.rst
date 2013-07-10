@@ -12,8 +12,8 @@ implemented using `OpenSSL <http://openssl.org/>`_.
 Motivation
 -----------
 Doing encryption in *correctly* in Python is hard.
-In spite of `The Zen of Python <http://www.python.org/dev/peps/pep-0020/>`_
-the is often no obvious way to do something.
+In spite of `The Zen of Python <http://www.python.org/dev/peps/pep-0020/>`_,
+there is often no obvious way to do something.
 This repository is a place
 to both experiment and learn about
 using OpenSSL to implement cryptographic APIs.
@@ -147,5 +147,5 @@ has been created for use.
 But as yet there are no documentation
 has been written.
 
-.. |build_status| image:: https://secure.travis-ci.org/aliles/opentls.png?branch=master
-   :target: http://travis-ci.org/#!/aliles/opentls
+.. |build_status| image:: https://secure.travis-ci.org/alex/opentls.png?branch=master
+   :target: http://travis-ci.org/alex/opentls

@@ -52,7 +52,7 @@ class HMACTests(object):
         api.HMAC_Init_ex(ctx, api.cast('void*', key), len(self.key),
                 self.md, api.NULL)
         for pos in range(len(self.data)):
-            api.HMAC_Update(ctx, api.cast('void*', data+pos), 1)
+            api.HMAC_Update(ctx, api.cast('void*', data + pos), 1)
         api.HMAC_Final(ctx, buff, size)
         api.HMAC_CTX_cleanup(ctx)
         self.assertEqual(self.digest, api.buffer(buff, size[0])[:])
