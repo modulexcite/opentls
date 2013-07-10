@@ -58,7 +58,7 @@ class HMACTests(object):
     def test_multiple_updates(self):
         hmac = new(self.key, None, self.md)
         for i in range(len(self.data)):
-            ch = self.data[i:i+1]
+            ch = self.data[i:i + 1]
             hmac.update(ch)
         self.assertEqual(self.digest, hmac.digest())
 
@@ -67,7 +67,7 @@ class HMACTests(object):
         hexdigest = hmac.hexdigest()
         received = []
         for pos in range(0, len(hexdigest), 2):
-            received.append(int(hexdigest[pos:pos+2], 16))
+            received.append(int(hexdigest[pos:pos + 2], 16))
         expected = [b if isinstance(b, numbers.Integral) else ord(b)
                 for b in self.digest]
         self.assertEqual(expected, received)

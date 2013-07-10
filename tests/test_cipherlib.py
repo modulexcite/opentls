@@ -11,8 +11,6 @@ except ImportError:
 from tls import cipherlib
 from tls.c import api
 
-from tests.c import test_evp_cipher as vectors
-
 
 if hasattr(str, 'decode'):
     int2byte = chr
@@ -207,7 +205,7 @@ class CipherTests(object):
     def hexstr_to_bytestr(hexstr):
         chars = []
         for pos in range(0, len(hexstr), 2):
-            chars.append(int(hexstr[pos:pos+2], 16))
+            chars.append(int(hexstr[pos:pos + 2], 16))
         return b"".join(int2byte(c) for c in chars)
 
     @classmethod
@@ -247,8 +245,8 @@ class CipherTests(object):
         result = self._encrypt()
         pos = len(self.ciphertext)
         result = (result[:pos]
-                + int2byte(ord(result[pos:pos+1]) ^ 0x80)
-                + result[pos+1:])
+                + int2byte(ord(result[pos:pos + 1]) ^ 0x80)
+                + result[pos + 1:])
         self.assertRaises(ValueError, self._decrypt, result)
 
     def test_bitflip_padding_decrypt(self):
@@ -264,7 +262,7 @@ class CipherTests(object):
     def test_trunc_hmac_decrypt(self):
         result = self._encrypt()
         pos = len(self.ciphertext)
-        result = result[:pos] + result[pos+1:]
+        result = result[:pos] + result[pos + 1:]
         self.assertRaises(ValueError, self._decrypt, result)
 
     def test_trunc_padding_decrypt(self):

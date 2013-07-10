@@ -55,7 +55,7 @@ class DigestTests(object):
         self.assertEqual(hash_value, self.hash_short)
 
         data = api.new('char[]', self.data_long[len(self.data_short):])
-        api.EVP_DigestUpdate(self.ctx, api.cast('void*', data), len(data)-1)
+        api.EVP_DigestUpdate(self.ctx, api.cast('void*', data), len(data) - 1)
         api.EVP_DigestFinal_ex(self.ctx, buf, size)
         hash_value = b''.join('{0:02x}'.format(v).encode() for v in islice(buf, size[0]))
         self.assertEqual(hash_value, self.hash_long)
